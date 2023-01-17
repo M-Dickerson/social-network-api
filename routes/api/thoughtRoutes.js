@@ -11,7 +11,7 @@ const {
 } = require("../../controllers/thoughtController");
 
 // the route for getting and creating thoughts(posts)
-router.route("/").get(getThoughts).post(createThought);
+router.route("/").get(getThought).post(createThought);
 // the route for getting thoughts(posts) by ID, updating and deleting thoughts(posts)
 router.route("/:thoughtId").get(getSingleThought).put(updateThought).delete(deleteThought);
 // allows reactions to be created
