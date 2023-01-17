@@ -38,7 +38,7 @@ module.exports = {
                 res.status(500).json(err);
             });
     },
-    // updates an existing thought(post)
+    // updates an existing thought(post) through its ID
     updateThought(req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
@@ -55,5 +55,49 @@ module.exports = {
                 res.status(500).json(err);
             });
     },
-
-}
+    // allows a thought(post) to be deleted by its ID
+    deleteThought(req, res) {
+        Thought.findOneAndRemove({ _id: req.params.thoughtId })
+            .then((thought) =>
+                !thought
+                    ? res.status(404).json({ message: "No thought with this id" })
+                    : thought.deleteMany({ _id: { $in: username } })
+            )
+            .then((thought) =>
+                !thought
+                    ? res.status(404).json({
+                        message: 'thought created but no user with this id!',
+                    })
+                    : res.json({ message: "What was I thinking of again?" })
+            )
+            .catch((err) => res.status(500).json(err));
+    },
+    // creates reactions
+    createReaction(req, res) {
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $push: { reactions: req.body } },
+            { runValidators: true, new: true }
+        )
+            .then((thought) =>
+                !thought
+                    ? res.status(404).json({ message: "Could not find post by ID" })
+                    : res.json(thought)
+            )
+            .catch((err) => res.status(500).json(err));
+    },
+    // allows reactions to be deleted
+    deleteReaction(req, res) {
+        Reaction.findOneAndDelete(
+            { _id: req.params.thoughtId },
+            { $pull: { reactions: { reactionId: req.params.reactionId } } },
+            { runValidators: true, new: true }
+        )
+            .then((Reaction) =>
+                !Reaction
+                    ? res.status(404).json({ message: "Could not find post by ID" })
+                    : res.json(Reaction)
+            )
+            .catch((err) => res.status(500).json(err));
+    },
+};
