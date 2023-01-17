@@ -1,4 +1,4 @@
-const { User, Thought, Reaction } = require("../models");
+const { User, Thought } = require("../models");
 module.exports = {
 // fetches all thoughts(posts)
     getThought(req, res) {
@@ -22,9 +22,9 @@ module.exports = {
             .then(({ _id }) => {
                 return User.findOneAndUpdate(
                     { username: req.body.username },
-                    { $push: { thought: _id } },
-                    { new: true }
-                );
+                    { $addToSet: { thoughts: _id } },
+                    { new: true },
+                )
             })
             .then((user) =>
                 !user
