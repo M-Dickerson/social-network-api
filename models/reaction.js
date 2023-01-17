@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-// 
+// creates the reaction schema
 const reactionSchema = new Schema(
     {
         reactionID: {
