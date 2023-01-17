@@ -18,5 +18,6 @@ router.route("/:thoughtId").get(getSingleThought).put(updateThought).delete(dele
 router.route("/:thoughtId/reactions").post(createReaction);
 // allows reactions to be deleted
 router.route("/:thoughtId/reactions/:reactionId").delete(deleteReaction);
+
 // export
 module.exports = router;
