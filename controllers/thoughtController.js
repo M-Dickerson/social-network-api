@@ -8,7 +8,7 @@ module.exports = {
     },
 // returns a single thought(post) by ID
     getSingleThought(req, res) {
-        Thought.findOne({ _id: req.params.thoughtId })
+        Thought.findOne({ _id: req.params.thoughtID })
             .then((thought) =>
                 !thought
                     ? res.status(404).json({ message: "Can't locate post" })
@@ -41,7 +41,7 @@ module.exports = {
 // updates an existing thought(post) through its ID
     updateThought(req, res) {
         Thought.findOneAndUpdate(
-            { _id: req.params.thoughtId },
+            { _id: req.params.thoughtID },
             { $set: req.body },
             { runValidators: true, new: true }
         )
@@ -57,7 +57,7 @@ module.exports = {
     },
 // allows a thought(post) to be deleted by its ID
     deleteThought(req, res) {
-        Thought.findOneAndRemove({ _id: req.params.thoughtId })
+        Thought.findOneAndRemove({ _id: req.params.thoughtID })
             .then((thought) =>
                 !thought
                     ? res.status(404).json({ message: "No thought with this id" })
@@ -75,7 +75,7 @@ module.exports = {
 // creates reactions
     createReaction(req, res) {
         Thought.findOneAndUpdate(
-            { _id: req.params.thoughtId },
+            { _id: req.params.thoughtID },
             { $push: { reactions: req.body } },
             { runValidators: true, new: true }
         )
@@ -89,8 +89,8 @@ module.exports = {
 // allows reactions to be deleted
     deleteReaction(req, res) {
         Reaction.findOneAndDelete(
-            { _id: req.params.thoughtId },
-            { $pull: { reactions: { reactionId: req.params.reactionId } } },
+            { _id: req.params.thoughtID },
+            { $pull: { reactions: { reactionId: req.params.reactionID } } },
             { runValidators: true, new: true }
         )
             .then((Reaction) =>
