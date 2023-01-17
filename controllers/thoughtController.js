@@ -11,7 +11,7 @@ module.exports = {
         Thought.findOne({ _id: req.params.thoughtID })
             .then((thought) =>
                 !thought
-                    ? res.status(404).json({ message: "Can't locate post" })
+                    ? res.status(404).json({ message: "Can't find a post with that ID" })
                     : res.json(thought)
             )
             .catch((err) => res.status(500).json(err));
@@ -29,7 +29,7 @@ module.exports = {
             .then((user) =>
                 !user
                     ? res.status(404).json({
-                        message: "The post you're looking for cannot be found",
+                        message: "Cannot create a new post",
                     })
                     : res.json("Created a new post 🎉")
             )
@@ -60,15 +60,15 @@ module.exports = {
         Thought.findOneAndRemove({ _id: req.params.thoughtID })
             .then((thought) =>
                 !thought
-                    ? res.status(404).json({ message: "No thought with this id" })
+                    ? res.status(404).json({ message: "There's no post with this ID" })
                     : thought.deleteMany({ _id: { $in: username } })
             )
             .then((thought) =>
                 !thought
                     ? res.status(404).json({
-                        message: "Thought created but no user with this id!",
+                        message: "There's no post with this ID",
                     })
-                    : res.json({ message: "What was I thinking of again?" })
+                    : res.json({ message: "Post successfully deleted! 🎉" })
             )
             .catch((err) => res.status(500).json(err));
     },
@@ -76,12 +76,12 @@ module.exports = {
     createReaction(req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtID },
-            { $push: { reactions: req.body } },
+            { $addToSet:{ reactions: req.body } },
             { runValidators: true, new: true }
         )
             .then((thought) =>
                 !thought
-                    ? res.status(404).json({ message: "Could not find post by ID" })
+                    ? res.status(404).json({ message: "Could not create a reaction" })
                     : res.json(thought)
             )
             .catch((err) => res.status(500).json(err));
@@ -95,7 +95,7 @@ module.exports = {
         )
             .then((Reaction) =>
                 !Reaction
-                    ? res.status(404).json({ message: "Could not find post by ID" })
+                    ? res.status(404).json({ message: "Could not find a reaction with this ID" })
                     : res.json(Reaction)
             )
             .catch((err) => res.status(500).json(err));

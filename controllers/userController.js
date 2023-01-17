@@ -32,7 +32,7 @@ module.exports = {
         )
             .then((user) =>
                 !user
-                    ? res.status(404).json({ message: "The user you are looking for does not exist" })
+                    ? res.status(404).json({ message: "No user can be found with that ID" })
                     : res.json(user)
             )
             .catch((err) => {
@@ -45,7 +45,7 @@ module.exports = {
         User.findOneAndDelete({ _id: req.params.userID })
             .then((user) =>
                 !user
-                    ? res.status(404).json({ message: "Cannot find a user with that ID" })
+                    ? res.status(404).json({ message: "No user can be found with that ID" })
                     : thought.deleteMany({ _id: { $in: user.username } })
             )
             .then(() => res.json({ message: "There is no longer a user with that ID" }))
@@ -60,7 +60,7 @@ module.exports = {
         )
             .then((user) =>
                 !user
-                    ? res.status(404).json({ message: "Cannot find a user with that ID" })
+                    ? res.status(404).json({ message: "No user can be found with that ID" })
                     : res.json(user)
             )
             .catch((err) => res.status(500).json(err));
@@ -74,7 +74,7 @@ module.exports = {
         )
             .then((user) =>
                 !user
-                    ? res.status(404).json({ message: "Cannot find a user with that ID" })
+                    ? res.status(404).json({ message: "No user can be found with that ID" })
                     : res.json(user)
             )
             .catch((err) => res.status(500).json(err));
