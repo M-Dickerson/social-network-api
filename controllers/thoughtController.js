@@ -1,12 +1,12 @@
 const { User, Thought, Reaction } = require("../models");
 module.exports = {
-    // fetches all thoughts(posts)
+// fetches all thoughts(posts)
     getThought(req, res) {
         Thought.find()
             .then((thought) => res.json(thought))
             .catch((err) => res.status(500).json(err));
     },
-    // returns a single thought(post) by ID
+// returns a single thought(post) by ID
     getSingleThought(req, res) {
         Thought.findOne({ _id: req.params.thoughtId })
             .then((thought) =>
@@ -16,7 +16,7 @@ module.exports = {
             )
             .catch((err) => res.status(500).json(err));
     },
-    // creates a brand new thought(post)
+// creates a brand new thought(post)
     createThought(req, res) {
         Thought.create(req.body)
             .then(({ _id }) => {
@@ -38,7 +38,7 @@ module.exports = {
                 res.status(500).json(err);
             });
     },
-    // updates an existing thought(post) through its ID
+// updates an existing thought(post) through its ID
     updateThought(req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
@@ -55,7 +55,7 @@ module.exports = {
                 res.status(500).json(err);
             });
     },
-    // allows a thought(post) to be deleted by its ID
+// allows a thought(post) to be deleted by its ID
     deleteThought(req, res) {
         Thought.findOneAndRemove({ _id: req.params.thoughtId })
             .then((thought) =>
@@ -66,13 +66,13 @@ module.exports = {
             .then((thought) =>
                 !thought
                     ? res.status(404).json({
-                        message: 'thought created but no user with this id!',
+                        message: "Thought created but no user with this id!",
                     })
                     : res.json({ message: "What was I thinking of again?" })
             )
             .catch((err) => res.status(500).json(err));
     },
-    // creates reactions
+// creates reactions
     createReaction(req, res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
@@ -86,7 +86,7 @@ module.exports = {
             )
             .catch((err) => res.status(500).json(err));
     },
-    // allows reactions to be deleted
+// allows reactions to be deleted
     deleteReaction(req, res) {
         Reaction.findOneAndDelete(
             { _id: req.params.thoughtId },
