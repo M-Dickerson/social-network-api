@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const router = require("express").Router();
 // brings over the user controllers
 const {
     getUsers,
@@ -13,9 +13,9 @@ const {
 // the route for getting and creating users
 router.route("/").get(getUsers).post(createUser);
 // the route for getting users by ID, updating and deleting users
-router.route('/:userID').get(getSingleUser).put(updateUser).delete(deleteUser);
+router.route("/:userID").get(getSingleUser).put(updateUser).delete(deleteUser);
 // allows friends to be created and deleted
-router.route('/:userID/friends/:friendID').post(createFriend).delete(deleteFriend);
+router.route("/:userID/friends/:friendID").post(createFriend).delete(deleteFriend);
 
 // export
 module.exports = router;
