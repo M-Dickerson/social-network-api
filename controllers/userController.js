@@ -67,9 +67,9 @@ module.exports = {
     },
 // allows a friend to be deleted
     deleteFriend(req, res) {
-        User.findOneAndDelete(
+        User.findOneAndUpdate(
             { _id: req.params.userID },
-            { $pull: { friends: { reactionId: req.params.friendID } } },
+            { $pull: { friends: req.params.friendID } },
             { runValidators: true, new: true }
         )
             .then((user) =>
