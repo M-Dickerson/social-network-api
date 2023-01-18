@@ -17,7 +17,7 @@ The user must have MongoDB, Node.js, and Insomnia installed. A list of the depen
 
 ## Usage
 
-Walk-through video: [here]()
+Walk-through video: [here](https://drive.google.com/file/d/1Z-1xlxgeX74KqaGik8gsVMtwOSumXI6r/view)
 
 
 ![screenshot](./assets/screenshot.png)
